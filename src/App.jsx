@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeProvider } from './ThemeContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -10,13 +9,9 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ChatWidget from './components/ChatWidget'
 
-function PageContent() {
+function App() {
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <ThemeProvider>
       <Navbar />
       <Hero />
       <About />
@@ -26,16 +21,6 @@ function PageContent() {
       <Contact />
       <Footer />
       <ChatWidget />
-    </motion.main>
-  )
-}
-
-function App() {
-  return (
-    <ThemeProvider>
-      <AnimatePresence mode="wait">
-        <PageContent />
-      </AnimatePresence>
     </ThemeProvider>
   )
 }
