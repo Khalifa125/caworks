@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAWORKS — Artistic Architectural Glass · Dubai & London</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #B8953F;
+    --gold-light: #D4AF6A;
+    --gold-pale: #EDD99A;
+    --gold-dim: rgba(184,149,63,0.18);
+    --black: #0A0A08;
+    --deep: #111109;
+    --ink: #1A1A16;
+    --surface: #141410;
+    --ivory: #F5F0E8;
+    --ivory-dim: rgba(245,240,232,0.65);
+    --ivory-faint: rgba(245,240,232,0.1);
+    --rule: rgba(184,149,63,0.25);
+    --font-display: Georgia, 'Times New Roman', serif;
+    --font-body: Arial, Helvetica, sans-serif;
+  }
+
+  @font-face {
+    font-family: 'Display Fallback';
+    src: local('Georgia'), local('Times New Roman');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Body Fallback';
+    src: local('Arial'), local('Helvetica'), local('Segoe UI');
+    font-display: swap;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── GRAIN OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  .display { font-family: var(--font-display); font-weight: 300; letter-spacing: 0.02em; }
+  .serif-italic { font-family: var(--font-display); font-style: italic; }
+  .caps { letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.68rem; font-weight: 500; }
+  .gold { color: var(--gold-light); }
+  .gold-rule { width: 48px; height: 1px; background: var(--gold); display: block; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    0%,100% { opacity: 0.5; } 50% { opacity: 1; }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 1.1s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .fade-up-d1 { animation-delay: 0.15s; }
+  .fade-up-d2 { animation-delay: 0.3s; }
+  .fade-up-d3 { animation-delay: 0.45s; }
+  .fade-up-d4 { animation-delay: 0.6s; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 56px;
+    background: linear-gradient(to bottom, rgba(10,10,8,0.95) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #F5F0E8;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 36px; align-items: center; }
+  .nav-links a {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #F5F0E8;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 400;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    border: 1px solid var(--gold);
+    color: var(--gold-light) !important;
+    padding: 8px 20px;
+    transition: background 0.3s, color 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold); color: #0A0A08 !important; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 56px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 65% 40%, rgba(184,149,63,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(184,149,63,0.04) 0%, transparent 60%),
+      linear-gradient(165deg, #0f0f0c 0%, #0a0a08 40%, #0d0c09 100%);
+  }
+  .hero-grid {
+    position: absolute; top: 0; right: 0; z-index: 1;
+    width: 52%; height: 100%;
+    background:
+      linear-gradient(rgba(184,149,63,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,149,63,0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 70%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 70%);
+  }
+  .hero-deco {
+    position: absolute; right: 6%; top: 50%; transform: translateY(-50%); z-index: -1;
+    font-family: var(--font-display);
+    font-size: clamp(260px, 28vw, 420px);
+    font-weight: 300;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(184,149,63,0.08);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow span { font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+  .hero-eyebrow::after { content: ''; flex: 1; height: 1px; max-width: 80px; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 7.5vw, 108px);
+    min-font-size: 64px;
+    font-weight: 300;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+    max-width: 760px;
+    color: #F5F0E8;
+  }
+  @media (min-width: 1024px) {
+    .hero h1 { font-size: min(7.5vw, 108px); }
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub {
+    max-width: 520px;
+    font-size: 0.85rem;
+    color: #F5F0E8;
+    line-height: 1.9;
+    margin-bottom: 52px;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold);
+    color: #0A0A08;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 16px 36px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-ghost {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #F5F0E8;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+    transition: color 0.3s;
+  }
+  .btn-ghost::after { content: '→'; transition: transform 0.3s; }
+  .btn-ghost:hover { color: var(--gold-light); }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+  .hero-stats {
+    display: flex; flex-direction: row; gap: 28px; margin-top: 48px;
+  }
+  @media (min-width: 1024px) {
+    .hero-stats { position: absolute; right: 56px; bottom: 80px; flex-direction: column; align-items: flex-end; margin-top: 0; z-index: 2; }
+  }
+  .stat { text-align: left; }
+  @media (min-width: 1024px) {
+    .stat { text-align: right; }
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: #F5F0E8; margin-top: 4px; }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 120px 56px; position: relative; }
+  .section-tag {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px;
+  }
+  .section-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: 0.01em;
+    color: #F5F0E8;
+  }
+
+  /* ─── ABOUT / INTRO ─── */
+  .intro {
+    background: var(--deep);
+    border-top: 1px solid var(--rule);
+  }
+  .intro-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start;
+  }
+  .intro-left { position: sticky; top: 120px; }
+  .intro-quote {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: #F5F0E8;
+    margin: 32px 0 40px;
+    border-left: 2px solid var(--gold);
+    padding-left: 28px;
+  }
+  .intro-right { padding-top: 8px; }
+  .intro-body {
+    font-size: 0.88rem;
+    color: #F5F0E8;
+    line-height: 1.95;
+    margin-bottom: 20px;
+  }
+  .credentials {
+    margin-top: 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .cred {
+    border: 1px solid var(--rule);
+    padding: 22px 24px;
+    background: var(--ivory-faint);
+  }
+  .cred-num {
+    font-family: var(--font-display);
+    font-size: 2rem; font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .cred-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #F5F0E8; margin-top: 6px; }
+
+  /* ─── PRODUCTS GRID ─── */
+  .products { background: var(--black); }
+  .products-inner { max-width: 1200px; margin: 0 auto; }
+  .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 72px; }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .product-card {
+    position: relative;
+    background: var(--surface);
+    padding: 48px 40px 40px;
+    border: 1px solid transparent;
+    transition: border-color 0.4s, background 0.4s;
+    overflow: hidden;
+    cursor: default;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .product-card:hover::before { transform: scaleX(1); }
+  .product-card:hover { border-color: var(--rule); background: var(--ink); }
+  .product-icon {
+    font-size: 1.5rem; margin-bottom: 28px;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+  .product-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem; font-weight: 400;
+    margin-bottom: 14px;
+    line-height: 1.2;
+    color: #F5F0E8;
+  }
+  .product-desc {
+    font-size: 0.8rem;
+    color: #F5F0E8;
+    line-height: 1.85;
+    margin-bottom: 24px;
+  }
+  .product-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(184,149,63,0.3);
+    padding: 4px 10px;
+  }
+  .product-num {
+    position: absolute; bottom: 28px; right: 32px;
+    font-family: var(--font-display);
+    font-size: 4rem; font-weight: 300;
+    color: rgba(184,149,63,0.05);
+    line-height: 1;
+    transition: color 0.4s;
+  }
+  .product-card:hover .product-num { color: rgba(184,149,63,0.09); }
+
+  /* ─── PROJECTS ─── */
+  .projects { background: var(--deep); border-top: 1px solid var(--rule); }
+  .projects-inner { max-width: 1200px; margin: 0 auto; }
+  .projects-intro { max-width: 580px; margin-bottom: 72px; }
+  .projects-list { border-top: 1px solid var(--rule); }
+  .project-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 80px;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.3s;
+    cursor: default;
+    gap: 20px;
+  }
+  .project-row:hover { background: var(--ivory-faint); }
+  .project-row:hover .project-arrow { opacity: 1; transform: translateX(0); }
+  .project-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem; font-weight: 400;
+    color: #F5F0E8;
+  }
+  .project-city { font-size: 0.75rem; color: #F5F0E8; letter-spacing: 0.05em; }
+  .project-type {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(184,149,63,0.3);
+    padding: 4px 12px; justify-self: start;
+  }
+  .project-arrow {
+    font-size: 1rem; color: var(--gold);
+    opacity: 0; transform: translateX(-8px);
+    transition: opacity 0.3s, transform 0.3s;
+    text-align: right;
+  }
+  .projects-intro p { font-size: 0.85rem; color: #F5F0E8; line-height: 1.9; margin-top: 20px; }
+
+  /* ─── PROCESS ─── */
+  .process { background: var(--black); }
+  .process-inner { max-width: 1200px; margin: 0 auto; }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 72px;
+    border: 1px solid var(--rule);
+  }
+  .step {
+    padding: 48px 36px;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 3.5rem; font-weight: 300;
+    color: var(--gold-dim);
+    line-height: 1; margin-bottom: 32px;
+    display: block;
+  }
+  .step-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem; font-weight: 400;
+    margin-bottom: 14px;
+    color: #F5F0E8;
+  }
+  .step-desc { font-size: 0.78rem; color: #F5F0E8; line-height: 1.85; }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background: var(--deep);
+    border-top: 1px solid var(--rule);
+  }
+  .contact-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+  }
+  .contact-left .section-title { margin-bottom: 28px; }
+  .contact-body { font-size: 0.85rem; color: #F5F0E8; line-height: 1.9; margin-bottom: 48px; }
+  .contact-details { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+  .contact-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 500; min-width: 70px; margin-top: 2px; }
+  .contact-value { font-size: 0.85rem; color: #F5F0E8; }
+  .contact-right {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 60px 52px;
+  }
+  .contact-right h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 300;
+    margin-bottom: 8px;
+    color: #F5F0E8;
+  }
+  .contact-right p { font-size: 0.8rem; color: #F5F0E8; margin-bottom: 36px; }
+  .form-field {
+    margin-bottom: 20px;
+  }
+  .form-field label {
+    display: block;
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px; font-weight: 500;
+  }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--rule);
+    color: #F5F0E8;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 300;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus { border-color: var(--gold); }
+  .form-field textarea { resize: vertical; min-height: 90px; }
+  .form-field select option { background: var(--black); color: #F5F0E8; }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: rgba(245,240,232,0.3); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--rule);
+    padding: 56px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: #F5F0E8;
+  }
+  .footer-tagline { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: #F5F0E8; margin-top: 4px; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: #F5F0E8; text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-copy { font-size: 0.62rem; color: rgba(245,240,232,0.3); letter-spacing: 0.1em; }
+
+  /* ─── CHAT WIDGET ─── */
+  .chat-widget {
+    position: fixed; bottom: 36px; right: 36px; z-index: 200;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  }
+  .chat-badge {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.72rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+  .chat-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; animation: shimmer 2s infinite; }
+  .chat-name { color: #F5F0E8; font-weight: 500; letter-spacing: 0.05em; }
+  .chat-role { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+  .chat-btn {
+    background: var(--gold);
+    color: #0A0A08;
+    border: none;
+    padding: 14px 28px;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .chat-btn:hover { background: var(--gold-light); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    nav, section, .hero { padding-left: 32px; padding-right: 32px; }
+    footer { padding: 40px 32px; }
+    .intro-inner, .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+    .intro-left { position: static; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .step { border-bottom: 1px solid var(--rule); }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 0 24px 60px; min-height: 100svh; }
+    .products-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .project-row { grid-template-columns: 1fr 60px; }
+    .project-city, .project-type { display: none; }
+    .footer-inner { flex-direction: column; gap: 24px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .products-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .hero-deco { display: none; }
+    .hero-stats { flex-direction: row; gap: 20px; }
+    .contact-right { padding: 36px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">CAWORKS</a>
+  <div class="nav-links">
+    <a href="#products">Products</a>
+    <a href="#projects">Projects</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="nav-cta">Request a Quote</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-deco">G</div>
+
+  <div class="hero-content">
+
+    <div class="hero-eyebrow fade-up">
+      <span>Est. London · 2017</span>
+    </div>
+
+    <h1 class="fade-up fade-up-d1">
+      Where glass<br>becomes <em>art</em>
+    </h1>
+
+    <p class="hero-sub fade-up fade-up-d2">
+      A bespoke glass atelier with eight years of London excellence — transforming high-end residences and luxury hospitality spaces into extraordinary, lasting experiences. Now serving the Middle East from Dubai.
+    </p>
+
+    <div class="hero-actions fade-up fade-up-d3">
+      <a href="https://wa.me/971506369524" class="btn-primary">Speak with Our Designer</a>
+      <a href="#products" class="btn-ghost">Explore Our Work</a>
+    </div>
+
+  </div>
+
+  <div class="hero-stats fade-up fade-up-d4">
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Years of London Excellence</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">48h</div>
+      <div class="stat-label">Quote Turnaround</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">300°</div>
+      <div class="stat-label">Heat Resistance</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ INTRO ═══════════════════════════ -->
+<section class="intro">
+  <div class="intro-inner">
+    <div class="intro-left">
+      <div class="section-tag">Our Philosophy</div>
+      <h2 class="section-title">The Art of<br>Defining Space</h2>
+      <blockquote class="intro-quote">
+        "Every space deserves a defining moment — a surface that stops you still."
+      </blockquote>
+      <div class="credentials">
+        <div class="cred">
+          <div class="cred-num">UAE</div>
+          <div class="cred-label">In-house Fabrication</div>
+        </div>
+        <div class="cred">
+          <div class="cred-num">9+</div>
+          <div class="cred-label">Landmark Projects</div>
+        </div>
+        <div class="cred">
+          <div class="cred-num">5★</div>
+          <div class="cred-label">Hotel Partnerships</div>
+        </div>
+        <div class="cred">
+          <div class="cred-num">2</div>
+          <div class="cred-label">Global Studios</div>
+        </div>
+      </div>
+    </div>
+    <div class="intro-right">
+      <p class="intro-body">
+        CAWORKS was founded in London in 2017 with a singular purpose: to elevate architectural glass from a functional material into a vehicle for extraordinary artistic expression. We serve the world's most discerning clients — from private villa owners to the general managers of five-star international hotels.
+      </p>
+      <p class="intro-body">
+        Our work spans hand-gilded verre églomisé panels, architecturally backlit glass ceilings, bespoke decorative mirrors, and feature walls printed at monumental scale. Each commission is designed from the first sketch to the final installation by our in-house team — never outsourced, never compromised.
+      </p>
+      <p class="intro-body">
+        With the opening of our Dubai atelier, we now offer the full depth of our London expertise to clients across the Gulf, with in-house fabrication and project management based in the UAE.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ PRODUCTS ═══════════════════════════ -->
+<section class="products" id="products">
+  <div class="products-inner">
+    <div class="products-header">
+      <div>
+        <div class="section-tag">Our Specialisms</div>
+        <h2 class="section-title">Products &amp;<br>Applications</h2>
+      </div>
+      <a href="#contact" class="btn-ghost" style="align-self:flex-end;">View All Products</a>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-icon">◈</div>
+        <h3 class="product-name">Backlit Glass Panels &amp; Ceilings</h3>
+        <p class="product-desc">LED-illuminated glass that floods interiors with warm, diffused architectural light. Applied to walls, ceilings, reception counters, bar surfaces, and bedroom headboards — in any colour temperature or pattern.</p>
+        <div class="product-tags">
+          <span class="tag">Hotels</span><span class="tag">Residences</span><span class="tag">Bars</span>
+        </div>
+        <div class="product-num">01</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">✦</div>
+        <h3 class="product-name">Gold Leaf &amp; Verre Églomisé</h3>
+        <p class="product-desc">The ancient craft of reverse gilding — 24ct gold, antique silver, rose gold, or champagne leaf applied by hand to the reverse face of glass. Every panel is entirely unique, deeply luminous, and enduring.</p>
+        <div class="product-tags">
+          <span class="tag">Art Deco</span><span class="tag">Orientalist</span><span class="tag">Luxury</span>
+        </div>
+        <div class="product-num">02</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">⌀</div>
+        <h3 class="product-name">Decorative &amp; Artistic Mirrors</h3>
+        <p class="product-desc">Bespoke hand-sprayed mirrors with patterns applied from behind the glass — permanent, even, and visually arresting. Available in custom shapes, aged finishes, tinted glass, and full feature mirror walls.</p>
+        <div class="product-tags">
+          <span class="tag">Living Rooms</span><span class="tag">Entryways</span><span class="tag">Feature Walls</span>
+        </div>
+        <div class="product-num">03</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">◇</div>
+        <h3 class="product-name">Wetroom &amp; Shower Panels</h3>
+        <p class="product-desc">Luxury shower and wetroom enclosures in decorative glass, rated moisture and heat resistant to 300°C. A complete alternative to tile — patterned, frosted, coloured, or finished with gold-leaf accents.</p>
+        <div class="product-tags">
+          <span class="tag">Bathrooms</span><span class="tag">Steam Rooms</span><span class="tag">Saunas</span>
+        </div>
+        <div class="product-num">04</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">⊞</div>
+        <h3 class="product-name">Kitchen Splashbacks &amp; Islands</h3>
+        <p class="product-desc">Fully hob-safe at 300°C, zero maintenance, and infinitely customisable. Plain bold colour glass, backlit amber warmth, or gold leaf behind an island. Any shape, any size, including curved hob surrounds.</p>
+        <div class="product-tags">
+          <span class="tag">Kitchens</span><span class="tag">Home Bars</span><span class="tag">Islands</span>
+        </div>
+        <div class="product-num">05</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">▦</div>
+        <h3 class="product-name">Feature Walls &amp; Claddings</h3>
+        <p class="product-desc">Any image, pattern, or artwork reproduced on glass at architectural scale. Moorish geometry, pop art, onyx-look, abstract metallic — single continuous sheets produced up to 8 metres wide.</p>
+        <div class="product-tags">
+          <span class="tag">Hotels</span><span class="tag">Villas</span><span class="tag">Commercial</span>
+        </div>
+        <div class="product-num">06</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">⊟</div>
+        <h3 class="product-name">Entryways, Receptions &amp; Lobbies</h3>
+        <p class="product-desc">The arrival sequence sets every expectation. Our backlit panels, gold leaf wall features, and decorative glass installations are designed to establish immediate, undeniable luxury from the threshold onwards.</p>
+        <div class="product-tags">
+          <span class="tag">Hotels</span><span class="tag">Offices</span><span class="tag">Residences</span>
+        </div>
+        <div class="product-num">07</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-icon">⊕</div>
+        <h3 class="product-name">Lifts, Bars &amp; Statement Surfaces</h3>
+        <p class="product-desc">Lift cars clad in gold leaf or backlit glass transform an overlooked transit into a luxury moment. Bar counters that illuminate from within become the most photographed feature of any hospitality venue.</p>
+        <div class="product-tags">
+          <span class="tag">Lifts</span><span class="tag">Bars</span><span class="tag">Counters</span>
+        </div>
+        <div class="product-num">08</div>
+      </div>
+
+      <div class="product-card" style="background: var(--gold-dim); border-color: var(--rule);">
+        <div class="product-icon" style="font-size:1.1rem; opacity:0.6;">△</div>
+        <h3 class="product-name" style="font-size:1.1rem;">Bespoke Staircases</h3>
+        <p class="product-desc">Architectural staircases incorporating decorative glass balustrades, illuminated treads, and gold-leaf accents. From private residences to landmark commercial interiors.</p>
+        <div class="product-tags">
+          <span class="tag">Residential</span><span class="tag">Commercial</span>
+        </div>
+        <div class="product-num" style="color:rgba(184,149,63,0.12);">09</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+<section class="projects" id="projects">
+  <div class="projects-inner">
+    <div class="projects-intro">
+      <div class="section-tag">Notable Commissions</div>
+      <h2 class="section-title">Landmark<br>Projects</h2>
+      <p>
+        From Mayfair to Kensington, our installations are featured in some of the world's most prestigious hospitality and residential properties.
+      </p>
+    </div>
+
+    <div class="projects-list">
+      <div class="project-row">
+        <div class="project-name">Four Seasons Trinity Square</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Hospitality</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Nobu Hotel Shoreditch</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Hospitality</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Biltmore Hotel Mayfair</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Hospitality</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Hilton Kensington</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Hospitality</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Old War Office, Whitehall</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Hospitality</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Damac Tower by Versace</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Residential</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Four Seasons Private Residences</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Residential</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Mayo Clinic, Regent Street</div>
+        <div class="project-city">London</div>
+        <div class="project-type">Commercial</div>
+        <div class="project-arrow">→</div>
+      </div>
+      <div class="project-row">
+        <div class="project-name">Iona Cruise Ship</div>
+        <div class="project-city">United Kingdom</div>
+        <div class="project-type">Hospitality</div>
+        <div class="project-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ PROCESS ═══════════════════════════ -->
+<section class="process" id="process">
+  <div class="process-inner">
+    <div style="max-width:600px;">
+      <div class="section-tag">How We Work</div>
+      <h2 class="section-title">From Concept<br>to Installation</h2>
+    </div>
+
+    <div class="process-steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3 class="step-title">Consultation</h3>
+        <p class="step-desc">A free design consultation with our senior specialist — in person or via video. We review your space, discuss your vision, and advise on the best application, finish, and scale. Typically completed within 48 hours of enquiry.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3 class="step-title">Design &amp; Quotation</h3>
+        <p class="step-desc">Our studio develops detailed design drawings, material samples, and finish options tailored to your project. A comprehensive, transparent quotation is issued within 48 hours of the consultation.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3 class="step-title">In-house Fabrication</h3>
+        <p class="step-desc">Every panel is manufactured in our own Dubai facility. We control every stage — gilding, backlighting, cutting, and finishing — with no third-party involvement. Lead times are communicated at quotation.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <h3 class="step-title">Installation &amp; Completion</h3>
+        <p class="step-desc">Our specialist installation team handles every project from delivery to final fixing. We coordinate with your contractor, site manager, or interior designer to ensure a seamless, zero-disruption process.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="section-tag">Get in Touch</div>
+      <h2 class="section-title">Begin Your<br>Commission</h2>
+      <p class="contact-body">
+        Whether you are an interior designer with precise specifications, a developer briefing a hospitality fit-out, or a homeowner imagining something entirely new — we are here to listen, advise, and deliver.
+      </p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <span class="contact-label">Dubai</span>
+          <span class="contact-value">+971 50 636 9524</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">London</span>
+          <span class="contact-value">+44 333 090 5268</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Email</span>
+          <span class="contact-value">team@caworks.co</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Web</span>
+          <span class="contact-value">caworks.co</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Response</span>
+          <span class="contact-value">Within 48 hours, guaranteed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <h3>Request a Free Consultation</h3>
+      <p>Tell us about your project and our design team will be in touch within 48 hours.</p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="form-field">
+          <label>First Name</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="form-field">
+          <label>Last Name</label>
+          <input type="text" placeholder="Your surname">
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-field">
+        <label>Project Type</label>
+        <select>
+          <option value="">Select a category</option>
+          <option>Private Residence</option>
+          <option>Luxury Hotel / Hospitality</option>
+          <option>Commercial Office</option>
+          <option>Retail / Restaurant</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Tell Us About Your Project</label>
+        <textarea placeholder="Describe your space, vision, and timeline…"></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%; border:none; cursor:pointer; font-family:inherit;">
+        Submit Enquiry
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">CAWORKS</div>
+      <div class="footer-tagline">Artistic Architectural Glass · Dubai &amp; London</div>
+    </div>
+    <div class="footer-links">
+      <a href="#products">Products</a>
+      <a href="#projects">Projects</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+      <a href="https://caworks.co">caworks.co</a>
+    </div>
+    <div class="footer-copy">© CAWORKS 2024</div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════ CHAT WIDGET ═══════════════════════════ -->
+<div class="chat-widget">
+  <div class="chat-badge">
+    <div class="chat-dot"></div>
+    <div>
+      <div class="chat-name">Menna</div>
+      <div class="chat-role">Sr. Design Consultant · Online Now</div>
+    </div>
+  </div>
+  <button class="chat-btn" onclick="window.open('https://wa.me/971506369524','_blank')">
+    <span>WhatsApp Menna</span> →
+  </button>
+</div>
+
+</body>
+</html>
