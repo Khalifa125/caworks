@@ -1,0 +1,74 @@
+/* CAWORKS — Custom utility styles */
+
+.section-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.section-tag::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5vw, 68px);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  background: var(--color-black);
+  border: 1px solid var(--color-rule);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 300;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  appearance: none;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: var(--color-gold);
+}
+
+.form-input::placeholder {
+  color: rgba(245, 240, 232, 0.25);
+}
+
+select.form-input option {
+  background: var(--color-black);
+}
+
+textarea.form-input {
+  resize: vertical;
+}
