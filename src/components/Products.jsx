@@ -24,19 +24,20 @@ function ProductCard({ product, index }) {
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative p-[48px_40px_40px] border border-transparent transition-all duration-400 overflow-hidden cursor-default group
-        ${product.highlight ? 'bg-gold-dim border-rule' : 'bg-surface hover:bg-ink hover:border-rule'}`}
+      className={`relative p-[48px_40px_40px] border transition-all duration-400 overflow-hidden cursor-default group
+        ${product.highlight
+          ? 'bg-gold-dim border-theme-rule'
+          : 'bg-theme-surface hover:bg-theme-ink border-transparent hover:border-theme-rule'}`}
     >
-      {/* Hover line */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-gold to-transparent scale-x-0 origin-left transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
 
       <div className={`text-2xl mb-7 ${product.highlight ? 'opacity-60 text-sm' : 'text-gold opacity-80'}`}>
         {product.icon}
       </div>
-      <h3 className={`font-display ${product.highlight ? 'text-lg' : 'text-[1.3rem]'} font-normal mb-3.5 leading-tight`}>
+      <h3 className={`font-display text-theme-primary ${product.highlight ? 'text-lg' : 'text-[1.3rem]'} font-normal mb-3.5 leading-tight`}>
         {product.name}
       </h3>
-      <p className="text-sm text-ivory-dim leading-[1.85] mb-6">{product.desc}</p>
+      <p className="text-sm text-theme-dim leading-[1.85] mb-6">{product.desc}</p>
       <div className="flex flex-wrap gap-1.5">
         {product.tags.map((t) => (
           <span key={t} className="text-[0.58rem] tracking-[0.16em] uppercase text-gold border border-gold/30 px-[10px] py-[4px]">
@@ -55,14 +56,14 @@ function ProductCard({ product, index }) {
 
 export default function Products() {
   return (
-    <section className="bg-black px-6 md:px-8 lg:px-14 py-20 lg:py-[120px]" id="products">
+    <section className="bg-theme-primary px-6 md:px-8 lg:px-14 py-20 lg:py-[120px]" id="products">
       <div className="max-w-[1200px] mx-auto">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end gap-6 mb-[72px]">
           <div>
             <div className="section-tag">Our Specialisms</div>
-            <h2 className="section-title">Products &<br />Applications</h2>
+            <h2 className="section-title text-theme-primary">Products &<br />Applications</h2>
           </div>
-          <a href="#contact" className="text-xs tracking-[0.22em] uppercase font-medium text-ivory-dim no-underline flex items-center gap-2.5 transition-colors duration-300 hover:text-gold-light group self-start lg:self-end">
+          <a href="#contact" className="text-xs tracking-[0.22em] uppercase font-medium text-theme-dim no-underline flex items-center gap-2.5 transition-colors duration-300 hover:text-gold-light group self-start lg:self-end">
             View All Products
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </a>

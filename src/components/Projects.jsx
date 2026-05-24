@@ -23,10 +23,10 @@ function ProjectRow({ project, index }) {
       initial={{ opacity: 0, x: -16 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.4, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className="grid grid-cols-[2fr_1fr_1fr_80px] max-md:grid-cols-[1fr_60px] items-center py-7 border-b border-rule transition-colors duration-300 hover:bg-ivory-faint cursor-default gap-5 group"
+      className="grid grid-cols-[2fr_1fr_1fr_80px] max-md:grid-cols-[1fr_60px] items-center py-7 border-b border-theme-rule transition-colors duration-300 hover:bg-theme-faint cursor-default gap-5 group"
     >
-      <div className="font-display text-[1.25rem] font-normal">{project.name}</div>
-      <div className="text-sm text-ivory-dim tracking-[0.05em] max-md:hidden">{project.city}</div>
+      <div className="font-display text-[1.25rem] font-normal text-theme-primary">{project.name}</div>
+      <div className="text-sm text-theme-dim tracking-[0.05em] max-md:hidden">{project.city}</div>
       <div className="text-[0.6rem] tracking-[0.18em] uppercase text-gold border border-gold/30 px-3 py-1 justify-self-start max-md:hidden">
         {project.type}
       </div>
@@ -42,7 +42,7 @@ export default function Projects() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="bg-deep border-t border-rule px-6 md:px-8 lg:px-14 py-20 lg:py-[120px]" id="projects">
+    <section className="bg-theme-deep border-t border-theme-rule px-6 md:px-8 lg:px-14 py-20 lg:py-[120px]" id="projects">
       <div className="max-w-[1200px] mx-auto" ref={ref}>
         <div className="max-w-[580px] mb-[72px]">
           <motion.div
@@ -51,19 +51,19 @@ export default function Projects() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="section-tag">Notable Commissions</div>
-            <h2 className="section-title">Landmark<br />Projects</h2>
+            <h2 className="section-title text-theme-primary">Landmark<br />Projects</h2>
           </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm text-ivory-dim leading-[1.9] mt-5"
+            className="text-sm text-theme-dim leading-[1.9] mt-5"
           >
             From Mayfair to Kensington, our installations are featured in some of the world's most prestigious hospitality and residential properties.
           </motion.p>
         </div>
 
-        <div className="border-t border-rule">
+        <div className="border-t border-theme-rule">
           {PROJECTS.map((p, i) => (
             <ProjectRow key={p.name} project={p} index={i} />
           ))}

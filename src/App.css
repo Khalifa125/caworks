@@ -43,15 +43,15 @@
 
 .form-input {
   width: 100%;
-  background: var(--color-black);
-  border: 1px solid var(--color-rule);
-  color: var(--color-ivory);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-rule);
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.82rem;
   font-weight: 300;
   padding: 14px 16px;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
   appearance: none;
   border-radius: 0;
   box-sizing: border-box;
@@ -62,13 +62,26 @@
 }
 
 .form-input::placeholder {
-  color: rgba(245, 240, 232, 0.25);
+  color: var(--text-faint);
 }
 
 select.form-input option {
-  background: var(--color-black);
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 textarea.form-input {
   resize: vertical;
 }
+
+/* ─── Theme-aware utility classes ─── */
+.bg-theme-primary { background: var(--bg-primary); }
+.bg-theme-deep { background: var(--bg-deep); }
+.bg-theme-ink { background: var(--bg-ink); }
+.bg-theme-surface { background: var(--bg-surface); }
+.bg-theme-faint { background: var(--bg-faint); }
+.text-theme-primary { color: var(--text-primary); }
+.text-theme-dim { color: var(--text-dim); }
+.text-theme-faint { color: var(--text-faint); }
+.border-theme-rule { border-color: var(--border-rule); }
+.nav-theme-bg { background: var(--nav-bg); }
