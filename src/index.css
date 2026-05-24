@@ -13,8 +13,8 @@
   --color-ivory-dim: rgba(245, 240, 232, 0.65);
   --color-ivory-faint: rgba(245, 240, 232, 0.1);
   --color-rule: rgba(184, 149, 63, 0.25);
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'Montserrat', sans-serif;
+  --font-display: 'Cormorant Garamond', 'Cormorant Garamond Fallback', Georgia, 'Times New Roman', serif;
+  --font-body: 'Montserrat', 'Montserrat Fallback', 'Segoe UI', Arial, Helvetica, sans-serif;
 }
 
 /* ─── DARK THEME (default) ─── */
